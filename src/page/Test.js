@@ -1,7 +1,7 @@
 export const Test = () =>{
     return(
         <>
-            <p>salut</p>
+            <p>salukkjijot</p>
         </>
     )
 }

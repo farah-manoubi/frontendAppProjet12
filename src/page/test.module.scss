@@ -1,13 +1,17 @@
 .container{
     display: flex;
-    width: 80%;
+    width: 100%;
     
-
     .graphContainer{
+        width: 70%;
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
         align-items: center;
-        border: solid green;
+        gap: 30px;
+    }
+    .infoUser{
+        width: 30%;
     }
 }
+

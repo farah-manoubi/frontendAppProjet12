@@ -1,0 +1,36 @@
+.graphScore{
+    width: 280px;
+    height: 315px;
+    background-color: #fbfbfb;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}
+.legendContainer{
+    text-align: center;
+    margin-left: 5px;
+
+    .score{
+        margin-bottom: 2px;
+        font-size: 30px;
+        font-weight: 700;
+    }
+    .text{
+        margin-top: 1px;
+        padding-top: 0;
+        font-size: 17px;
+        font-weight: 700;
+        margin-bottom: 2px;
+        color: #74798C;
+    }
+}
+
+.round{
+    border-radius: 55%;
+    width: 65%;
+    height: 170px;
+    position: absolute;
+    background-color: #fff;
+}

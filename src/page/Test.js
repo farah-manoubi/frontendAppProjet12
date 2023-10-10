@@ -6,6 +6,9 @@ import { AverageSessGraph } from "../components/averageSessGraph/AverageSessGrap
 import { PerformanceGraph } from "../components/performanceGraph/PerformanceGraph";
 import { UserScoreGraph } from "../components/userScoreGraph/UserScoreGraph";
 import { UserIdentity } from "../components/userIdentity/UserIdentity";
+import { UserDataDisplay } from "../components/userDataDisplay/UserDataDisplay";
+
+
 
 export const Test = () =>{
     return(
@@ -16,11 +19,14 @@ export const Test = () =>{
             <div className={style.graphContainer}>
                 <UserIdentity />
                 <ActivityGraph />
-                <PerformanceGraph />
                 <AverageSessGraph />
+                <PerformanceGraph />
                 <UserScoreGraph />
-
             </div>
+            <div className={style.infoUser}>
+                <UserDataDisplay />
+            </div>
+            
             
         </div>
             

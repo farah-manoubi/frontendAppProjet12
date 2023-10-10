@@ -14,7 +14,9 @@ export const ActivityGraph = () =>{
           
             const response = await fetch(url);
             const json = await response.json();
+            console.log(json.data.sessions)
             setData(json);  
+            
             
         };
         fetchData();
@@ -33,10 +35,14 @@ export const ActivityGraph = () =>{
         return null;
       };
     
+    const formatXaxis = (index, i) => {
+	    return i + 1;
+	}
 
     return(
         <>
         {
+
             data && (
 
                 <div className={style.barchart}>
@@ -59,8 +65,8 @@ export const ActivityGraph = () =>{
                     >
                         
                         <CartesianGrid vertical={false} strokeDasharray="2 2" />
-                        {data.data.sessions.map((session, index) =><XAxis key={index} dataKey={index} tickLine={false} stroke="#9B9EAC"/>)}
-                        <YAxis orientation="right" type="number" domain={[0, 'auto']} tickLine={false} axisLine={false} tickCount={3} stroke="#9B9EAC" />
+                        <XAxis dataKey={"day"} tickLine={false} stroke="#9B9EAC" scale='point' padding={{left: 11, right: 11}} tickFormatter={formatXaxis}/>
+                        <YAxis orientation="right" type="number" domain={[0, 'auto']} tickLine={false} axisLine={false} tickCount={3} stroke="#9B9EAC" tickMargin={15}/>
                         <Tooltip content={<CustomTooltip />}/>
                         <Bar dataKey={"kilogram"} fill="#282D30" radius={[20, 20, 0, 0]} barSize={7} />
                         <Bar dataKey={"calories"} fill="#E60000" radius={[20, 20, 0, 0]} barSize={7} />

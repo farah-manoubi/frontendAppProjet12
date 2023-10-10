@@ -1,0 +1,35 @@
+.lineChartContainer{
+    background-color:#FF0000;
+    border-radius: 5px;
+
+    .title{
+        margin-left: 30px;
+        width: 148px;
+
+        p{
+            font-family: 'Roboto', sans-serif;
+            font-size: 17px;
+            font-weight: 500;
+            color:#FFFFFF;
+            opacity: 50.4%;
+            margin-bottom: 0;
+        }
+    }
+
+  
+}
+
+.tooltipCustom{
+    width: 45px;
+    height: 30px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    .minute{
+      font-family: 'Roboto', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+    }
+}

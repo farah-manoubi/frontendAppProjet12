@@ -4,21 +4,7 @@ import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Responsi
 import style from "./performanceGraph.module.scss";
 
 
-export const PerformanceGraph = () =>{
-    const [ data , setData ] = useState(null); 
-    
-    useEffect(() => {
-        const url = "../mockUser12/performanceApi.json";
-        const fetchData = async () => {
-          
-            const response = await fetch(url);
-            const json = await response.json();
-            setData(json);  
-            
-        };
-        fetchData();
-    }, []);
-
+export const PerformanceGraph = ({dataPerformance}) =>{
     const valueKind = (day) =>{
         switch(day){
             default: return '';
@@ -29,27 +15,18 @@ export const PerformanceGraph = () =>{
             case 5: return "speed";
             case 6: return "intensity";
         }
-
     }
 
     return(
-        <>
-        
-        {
-            
-            data && (
-                <div className={style.containerGraph}>
-                    <RadarChart cx="50%" cy="50%" outerRadius="65%" data={data.data.data} width={280} height={315}>
-                        <PolarGrid gridType="polygon" radialLines={false} />
-                        <PolarAngleAxis dataKey={"kind"} tickFormatter={valueKind} tick={{ fill: "white", fontSize: 12 }} className="recharts-polar-angle-axis-tick-value"/>
-                        <Radar name="Mike" dataKey={"value"} stroke="#FF0101B2" fill="#FF0101B2" fillOpacity={0.6} />
-                    </RadarChart>
-                </div>
-                
-            )
-        }
-        
-       
+        <>{ dataPerformance && (
+            <div className={style.containerGraph}>
+                <RadarChart cx="50%" cy="50%" outerRadius="65%" data={dataPerformance.data.data} width={280} height={315}>
+                    <PolarGrid gridType="polygon" radialLines={false} />
+                    <PolarAngleAxis dataKey={"kind"} tickFormatter={valueKind} tick={{ fill: "white", fontSize: 12 }} className="recharts-polar-angle-axis-tick-value"/>
+                    <Radar name="Mike" dataKey={"value"} stroke="#FF0101B2" fill="#FF0101B2" fillOpacity={0.6} />
+                </RadarChart>
+            </div>
+            )}   
         </>
     )
 }

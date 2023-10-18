@@ -5,28 +5,16 @@ import { useParams } from "react-router-dom";
 import style from "./userScroreGraph.module.scss"
 
 
-export const UserScoreGraph = () =>{
-    const [ data , setData ] = useState(null); 
+export const UserScoreGraph = ({dataUserScore}) =>{
     
-    useEffect(() => {
-        const url = "../mockUser12/userApi.json";
-        const fetchData = async () => {
-          
-            const response = await fetch(url);
-            const json = await response.json();
-            console.log(json.data)
-            //setData(json);
-            setData([{
-                name : "score",
-                "uv" : (json.data.todayScore *100),
-                fill : "#FF0101"
-            }])
-            
-            
-        };
-        fetchData();
-    }, []);
 
+    const dataScore =[
+        {
+            name : "score",
+            "uv" : (dataUserScore.data.todayScore *100),
+            fill : "#FF0101"
+        }
+    ]
 
     const LegendCustom = ({ payload }) => {
         if (payload && payload.length) {
@@ -42,18 +30,17 @@ export const UserScoreGraph = () =>{
     
 
     return(
-        <>
+        <>{ dataUserScore && (
     
-        {
-            
-            data && (
+        
                 
             <div className={style.graphScore}>
+                <div className={style.title}><p>Score</p></div>
              
-             <div className={style.round}></div>
+            <div className={style.round}></div>
             <ResponsiveContainer width="100%" height="100%">
                 
-                <RadialBarChart cx="55%" cy="55%" innerRadius="80%" startAngle={90} endAngle={400} barSize={13} data={data}>
+                <RadialBarChart cx="55%" cy="55%" innerRadius="80%" startAngle={90} endAngle={400} barSize={13} data={dataScore}>
                     <PolarAngleAxis type="number" domain={[0 , 100]} tick={false} />
                 <RadialBar
                     dataKey={"uv"}
@@ -63,7 +50,7 @@ export const UserScoreGraph = () =>{
                 <Legend
                     layout="vertical"
                     verticalAlign="middle"
-                    payload={data}
+                    payload={dataScore}
                     content={<LegendCustom />}
                     fill='#FFFFFF'
 				/>
@@ -72,10 +59,9 @@ export const UserScoreGraph = () =>{
                 
             </div>
 
-            )
-        }
-        
        
+        
+        )}
         </>
     )
 }

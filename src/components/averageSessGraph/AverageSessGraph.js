@@ -4,21 +4,8 @@ import { useParams } from "react-router-dom";
 import style from "./averageSessGraph.module.scss";
 
 
-export const AverageSessGraph = () =>{
-    const [ data , setData ] = useState(null); 
+export const AverageSessGraph = ({dataAverageSess}) =>{
     
-    useEffect(() => {
-        const url = "../mockUser12/averageSessApi.json";
-        const fetchData = async () => {
-          
-            const response = await fetch(url);
-            const json = await response.json();
-            setData(json);  
-            
-        };
-        fetchData();
-    }, []);
-
     const CustomTooltip = ({ active, payload, label }) => {
         if (active && payload && payload.length) {
           return (
@@ -44,28 +31,21 @@ export const AverageSessGraph = () =>{
     }
 
     return(
-        <>
-        {
-            data && (
-                <div className={style.lineChartContainer}>
-                    <div className={style.title}>
-                        <p>Durée moyenne des sessions</p>
-                    </div>
-
-                        <LineChart width={280} height={260} data={data.data.sessions}>
-                            <XAxis dataKey={"day"} height={50} tickLine={false} axisLine={false} domain={[1,7]} stroke="#FFFFFF" style={{opacity: "50.4%", fontSize:"15px"}} padding={{left: 10, right: 10}} tickFormatter={formatXAxis} dy={10}/>
-                            <YAxis hide={true}/>
-                            <Tooltip content={<CustomTooltip />} cursor={{ strokeWidth: 110, stroke: "rgba(0, 0, 0, 0.1)"}} />
-                            
-                            <Line type="monotone" dataKey={"sessionLength"} stroke="#FFFFFF" strokeWidth={2} style={{opacity: "50.4%"}}/>
-                        </LineChart>
+        <>{ dataAverageSess && (
+            <div className={style.lineChartContainer}>
+                <div className={style.title}>
+                    <p>Durée moyenne des sessions</p>
                 </div>
-            
 
-            )
-        }
-        
-       
+                    <LineChart width={280} height={260} data={dataAverageSess.data.sessions}>
+                        <XAxis dataKey={"day"} height={50} tickLine={false} axisLine={false} domain={[1,7]} stroke="#FFFFFF" style={{opacity: "50.4%", fontSize:"15px"}} padding={{left: 10, right: 10}} tickFormatter={formatXAxis} dy={10}/>
+                        <YAxis hide={true}/>
+                        <Tooltip content={<CustomTooltip />} cursor={{ strokeWidth: 110, stroke: "rgba(0, 0, 0, 0.1)"}} />
+                        
+                        <Line type="monotone" dataKey={"sessionLength"} stroke="#FFFFFF" strokeWidth={2} style={{opacity: "50.4%"}}/>
+                    </LineChart>
+            </div>
+        )}       
         </>
     )
 }

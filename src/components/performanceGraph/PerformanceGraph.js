@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
+import { Radar, RadarChart, PolarGrid, PolarAngleAxis, ResponsiveContainer } from 'recharts';
 import style from "./performanceGraph.module.scss";
 
 
@@ -18,14 +16,17 @@ export const PerformanceGraph = ({dataPerformance}) =>{
     }
 
     return(
-        <>{ dataPerformance && (
-            <div className={style.containerGraph}>
-                <RadarChart cx="50%" cy="50%" outerRadius="65%" data={dataPerformance.data.data} width={280} height={315}>
-                    <PolarGrid gridType="polygon" radialLines={false} />
-                    <PolarAngleAxis dataKey={"kind"} tickFormatter={valueKind} tick={{ fill: "white", fontSize: 12 }} className="recharts-polar-angle-axis-tick-value"/>
-                    <Radar name="Mike" dataKey={"value"} stroke="#FF0101B2" fill="#FF0101B2" fillOpacity={0.6} />
-                </RadarChart>
-            </div>
+        <>
+            { dataPerformance && (
+                <div className={style.containerGraph}>
+                    <ResponsiveContainer width="100%" height={250}>
+                    <RadarChart cx="50%" cy="50%" outerRadius="52%" data={dataPerformance.data.data} width={250} height={250}>
+                        <PolarGrid gridType="polygon" radialLines={false} />
+                        <PolarAngleAxis dataKey={"kind"} tickFormatter={valueKind} tick={{ fill: "white", fontSize: 12 }} className="recharts-polar-angle-axis-tick-value"/>
+                        <Radar name="Mike" dataKey={"value"} stroke="#FF0101B2" fill="#FF0101B2" fillOpacity={0.6} />
+                    </RadarChart>
+                    </ResponsiveContainer>
+                </div>
             )}   
         </>
     )

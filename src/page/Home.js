@@ -22,74 +22,76 @@ export const Home = () =>{
     const [ userActivity , setUserActivity ] = useState();
     const [ userAverageSess , setUserAverageSess ] = useState();
     const [ userPerformance , setUserPerformance ] = useState();
-    const [mockedData, setMockedData] = useState(false); 
-    const [displayData, setDisplayData] = useState(true);
+    const [mockedData, setMockedData] = useState(true); 
+    const [displayData, setDisplayData] = useState(false);
 
     useEffect (() =>{
         let userDataResult, userActivityResult, userAverageSessResult, userPerformanceResult;
 
-        if(mockedData){
-            userDataResult = getUserIdentityMock(userId);
-            userActivityResult = getActivityMock(userId);
-            userAverageSessResult = getAverageSessionMock(userId);
-            userPerformanceResult = getPerformanceMock(userId);
+        async function fetchData(){
+            if(mockedData){
+                userDataResult = await getUserIdentityMock(userId);
+                userActivityResult = await getActivityMock(userId);
+                userAverageSessResult = await getAverageSessionMock(userId);
+                userPerformanceResult = await getPerformanceMock(userId);
+            }else{
+                userDataResult = await getUserIdentityData(userId);
+                userActivityResult = await getActivityData(userId);
+                userAverageSessResult = await getAverageSessionData(userId);
+                userPerformanceResult = await getPerformanceData(userId);
+            }
+            
+            if(userDataResult && userActivityResult && userAverageSessResult && userPerformanceResult){
+                setUserData(userDataResult);
+                setUserActivity(userActivityResult);
+                setUserAverageSess(userAverageSessResult);
+                setUserPerformance(userPerformanceResult);
+                setDisplayData(true);
+            }else{
+                setUserData();
+                setUserActivity();
+                setUserAverageSess();
+                setUserPerformance();
+                setDisplayData(false);
+            }
         }
-        else{
-            userDataResult = getActivityData(userId);
-            userActivityResult = getAverageSessionData(userId);
-            userAverageSessResult = getPerformanceData(userId);
-            userPerformanceResult = getUserIdentityData(userId);
+        if(userId){
+            fetchData()
         }
-
-        if(userDataResult && userActivityResult && userAverageSessResult && userPerformanceResult){
-            setUserData(userDataResult);
-            setUserActivity(userActivityResult);
-            setUserAverageSess(userAverageSessResult);
-            setUserPerformance(userPerformanceResult);
-            setDisplayData(true);
-        }
-        else{
-            setUserData();
-            setUserActivity();
-            setUserAverageSess();
-            setUserPerformance();
-            setDisplayData(false);
-        }
-        
-        
+    
     }, [userId, mockedData])
 
-
-
-
+    const switchDataSource = () =>{
+        setDisplayData(false)
+        setMockedData(!mockedData)
+    }
 
     return(
-        <>{console.log(getUserIdentityMock(userId))}
-            
+        <>
             <Header />
             <div className={style.container}>
                 <Footer />
                 
                 { !displayData ? (
-                    <div>
-                        <p>Erreur, impossible d'utiliser données de l'API</p>
-                        <button onClick={() => setMockedData(mockedData)}>utiliser les données du mock</button>
+                    <div className={style.errorMsg}>
+                        <p>Erreur, impossible d'utiliser les données de l'API</p>
+                        <button onClick={switchDataSource}>Utiliser les données du mock</button>
                     </div>
-                    
-
                 ) : (
                     <>
                         <div className={style.graphContainer}>
                             <UserIdentity dataIdentity={userData} />
                             <ActivityGraph dataActivity={userActivity} />
-                            <AverageSessGraph dataAverageSess={userAverageSess} />
-                            <PerformanceGraph dataPerformance={userPerformance} />
-                            <UserScoreGraph dataUserScore={userData}/>
+                            <div className={style.graphs}>
+                                <AverageSessGraph dataAverageSess={userAverageSess} />
+                                <PerformanceGraph dataPerformance={userPerformance} />
+                                <UserScoreGraph dataUserScore={userData}/>
+                            </div>
                         </div>
 
                         <div className={style.infoUser}>
 
-                            <button onClick={() => setMockedData(!mockedData)}>{mockedData ? "données de l'API" : "données du mock "}</button>
+                            <button onClick={switchDataSource}>{mockedData ? "Données de l'API" : "Données du mock "}</button>
 
                             <UserDataDisplay
                                 icone={energy}
@@ -117,8 +119,7 @@ export const Home = () =>{
                             />
                         </div> 
                     </> 
-                )}
-                
+                )}  
             </div> 
         </>
     )

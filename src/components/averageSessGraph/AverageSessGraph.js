@@ -1,6 +1,4 @@
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer} from 'recharts';
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer} from 'recharts';
 import style from "./averageSessGraph.module.scss";
 
 
@@ -27,25 +25,25 @@ export const AverageSessGraph = ({dataAverageSess}) =>{
             case 6: return "S";
             case 7: return "D";
         }
-
     }
 
     return(
-        <>{ dataAverageSess && (
-            <div className={style.lineChartContainer}>
-                <div className={style.title}>
-                    <p>Durée moyenne des sessions</p>
+        <>
+            { dataAverageSess && (
+                <div className={style.lineChartContainer}>
+                    <div className={style.title}>
+                        <p>Durée moyenne des sessions</p>
+                    </div>
+                    <ResponsiveContainer width="100%" height={193}>
+                        <LineChart height={193} data={dataAverageSess.data.sessions}>
+                            <XAxis dataKey={"day"} height={50} tickLine={false} axisLine={false} domain={[1,7]} stroke="#FFFFFF" style={{opacity: "50.4%", fontSize:"15px"}} padding={{left: 10, right: 10}} tickFormatter={formatXAxis} dy={10}/>
+                            <YAxis hide={true}/>
+                            <Tooltip content={<CustomTooltip />} cursor={{ strokeWidth: 110, stroke: "rgba(0, 0, 0, 0.1)"}} />
+                            <Line type="monotone" dataKey={"sessionLength"} stroke="#FFFFFF" strokeWidth={2} style={{opacity: "50.4%"}} dot={false}/>
+                        </LineChart>
+                    </ResponsiveContainer>
                 </div>
-
-                    <LineChart width={280} height={260} data={dataAverageSess.data.sessions}>
-                        <XAxis dataKey={"day"} height={50} tickLine={false} axisLine={false} domain={[1,7]} stroke="#FFFFFF" style={{opacity: "50.4%", fontSize:"15px"}} padding={{left: 10, right: 10}} tickFormatter={formatXAxis} dy={10}/>
-                        <YAxis hide={true}/>
-                        <Tooltip content={<CustomTooltip />} cursor={{ strokeWidth: 110, stroke: "rgba(0, 0, 0, 0.1)"}} />
-                        
-                        <Line type="monotone" dataKey={"sessionLength"} stroke="#FFFFFF" strokeWidth={2} style={{opacity: "50.4%"}}/>
-                    </LineChart>
-            </div>
-        )}       
+            )}       
         </>
     )
 }

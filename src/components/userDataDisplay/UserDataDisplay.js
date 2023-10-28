@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
 import style from "./userDataDisplay.module.scss";
-import energy from "../../assets/energy.png"
 
 export const UserDataDisplay = ({icone, number, id, description}) =>{
     return(

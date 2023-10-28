@@ -1,6 +1,10 @@
 .containerGraph{
     background-color: #282D30;
     border-radius: 5px;
+    width: 250px;
+    @media screen and (max-width: 1024px){
+        width: 33%;
+    }
 }
 .recharts-polar-angle-axis-tick-value {
     transform: translatex(-3rem);

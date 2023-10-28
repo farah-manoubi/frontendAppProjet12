@@ -1,13 +1,18 @@
 .graphScore{
-    width: 280px;
-    height: 315px;
+    width: 250px;
+    height: 250px;
     background-color: #fbfbfb;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 5px;
+
+    @media screen and (max-width: 1024px){
+        width: 33%;
+    }
 }
+
 .legendContainer{
     text-align: center;
     margin-left: 5px;
@@ -33,6 +38,10 @@
     height: 170px;
     position: absolute;
     background-color: #fff;
+    @media screen and (max-width: 1024px){
+        width: 77%;
+        margin-top: 30px;
+    }
 }
 
 .title{

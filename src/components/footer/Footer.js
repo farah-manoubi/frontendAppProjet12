@@ -21,7 +21,6 @@ export const Footer = () =>{
                         <p>Copyright, SportSee 2020</p>
                     </div>
                 </div>
-                
             </div>
         </>
     )
